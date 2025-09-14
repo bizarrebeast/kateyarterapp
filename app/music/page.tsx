@@ -1,19 +1,19 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Music, Play, Pause, ExternalLink, Sparkles, Headphones, ShoppingBag, Apple } from 'lucide-react';
-import Image from 'next/image';
+import { Music, Play, Pause, ExternalLink, Headphones, Download, Apple, Album } from 'lucide-react';
 
-// Spotify and Amazon Music icons as simple SVG components
+// Spotify icon as simple SVG component
 const SpotifyIcon = () => (
-  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.371-.721.49-1.101.24-3.02-1.843-6.841-2.25-11.281-1.23-.451.12-.93-.15-1.05-.601-.12-.45.15-.93.6-1.05 4.921-1.11 9.122-.63 12.531 1.44.361.15.481.72.301 1.2zm1.47-3.3c-.301.45-.931.631-1.381.301-3.451-2.11-8.701-2.731-12.781-1.491-.541.15-1.11-.15-1.26-.691-.15-.541.15-1.11.69-1.261 4.681-1.41 10.501-.721 14.431 1.741.45.271.631.901.301 1.401zm.15-3.45c-4.141-2.461-10.981-2.701-14.911-1.491-.631.18-1.32-.181-1.5-.811-.181-.631.18-1.321.81-1.501 4.561-1.38 12.151-1.11 16.941 1.71.571.361.751 1.11.391 1.681-.361.601-1.131.781-1.731.421z"/>
   </svg>
 );
 
-const AmazonMusicIcon = () => (
-  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+// YouTube Music icon
+const YouTubeMusicIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-11.304c-2.316 0-4.2 1.884-4.2 4.2s1.884 4.2 4.2 4.2 4.2-1.884 4.2-4.2-1.884-4.2-4.2-4.2zm-1.2 6.852V9.348L14.4 12l-3.6 2.652z"/>
   </svg>
 );
 
@@ -21,136 +21,90 @@ const AmazonMusicIcon = () => (
 interface Track {
   id: string;
   title: string;
-  game: string;
+  album?: string;
+  year: string;
   description: string;
-  coverArt: string;
+  coverArt?: string;
   audioUrl?: string;
   duration: string;
   links: {
     spotify?: string;
     apple?: string;
-    amazon?: string;
-    mint?: string;
+    youtube?: string;
+    soundcloud?: string;
   };
   tags: string[];
+  featured?: boolean;
 }
 
-// BizarreBeasts game soundtracks
+// Placeholder tracks for Kate's music
 const tracks: Track[] = [
   {
     id: '1',
-    title: 'Crystal Cavern',
-    game: 'Treasure Quest',
-    description: 'Ethereal underground adventure theme with mysterious crystal cave ambience and epic orchestral swells.',
-    coverArt: '/assets/page-assets/music/album-covers/crystal-cavern-bizarrebeasts-album-cover-2.svg',
-    audioUrl: '/assets/page-assets/music/CRYSTAL CAVERN- MASTER 1.mp3',
-    duration: '2:40',
-    links: {
-      spotify: '',
-      apple: '',
-      amazon: '',
-      mint: ''
-    },
-    tags: ['Adventure', 'Ambient', 'Orchestral']
+    title: 'Ethereal Waves',
+    album: 'Digital Dreams',
+    year: '2024',
+    description: 'Ambient electronic composition blending organic textures with digital synthesis',
+    duration: '4:32',
+    links: {},
+    tags: ['Electronic', 'Ambient', 'Soundtrack'],
+    featured: true,
   },
   {
     id: '2',
-    title: 'Head Crush',
-    game: 'Head Crush',
-    description: 'High-energy action soundtrack with pounding beats and intense electronic rhythms for crushing gameplay.',
-    coverArt: '/assets/page-assets/music/album-covers/head-crush-bizarrebeasts-album-cover-1.svg',
-    audioUrl: '/assets/page-assets/music/HEAD CRUSH- MASTER MP3 FOR GAME.mp3',
-    duration: '1:20',
-    links: {
-      spotify: '',
-      apple: '',
-      amazon: '',
-    },
-    tags: ['Action', 'Electronic', 'Intense']
+    title: 'Crystal Cavern',
+    album: 'Game Soundtracks Vol. 1',
+    year: '2024',
+    description: 'Atmospheric game soundtrack featuring layered synths and orchestral elements',
+    duration: '3:45',
+    links: {},
+    tags: ['Soundtrack', 'Orchestral', 'Gaming'],
   },
   {
     id: '3',
-    title: 'Night Beast',
-    game: 'BizarreBeasts',
-    description: 'Dark and mysterious theme featuring haunting melodies and atmospheric soundscapes.',
-    coverArt: '/assets/page-assets/music/album-covers/night-beast-bizarrebeasts-album-cover-3.svg',
-    audioUrl: '/assets/page-assets/music/Night Beast- BizarreBeasts.mp3',
-    duration: '3:33',
-    links: {
-      spotify: '',
-      apple: '',
-    },
-    tags: ['Dark', 'Atmospheric', 'Mystery']
+    title: 'Flowing Motion',
+    album: 'Nature Series',
+    year: '2023',
+    description: 'Meditative piece inspired by natural water movements and organic rhythms',
+    duration: '5:18',
+    links: {},
+    tags: ['Ambient', 'Nature', 'Meditation'],
   },
 ];
 
 export default function MusicPage() {
   const [playingTrack, setPlayingTrack] = useState<string | null>(null);
-  const [loadedTracks, setLoadedTracks] = useState<Set<string>>(new Set());
+  const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement | null }>({});
 
-  // Ensure only one track plays at a time
-  React.useEffect(() => {
-    // Pause all other tracks when playingTrack changes
-    Object.keys(audioRefs.current).forEach(trackId => {
-      const audio = audioRefs.current[trackId];
-      if (audio && trackId !== playingTrack) {
-        audio.pause();
-      }
-    });
-  }, [playingTrack]);
+  const filters = ['all', 'Electronic', 'Ambient', 'Soundtrack', 'Orchestral'];
+
+  const filteredTracks = selectedFilter === 'all'
+    ? tracks
+    : tracks.filter(track => track.tags.includes(selectedFilter));
 
   const handlePlayPause = (trackId: string) => {
-    // If clicking the same track that's playing, pause it
     if (playingTrack === trackId) {
       const audio = audioRefs.current[trackId];
       if (audio) {
         audio.pause();
         setPlayingTrack(null);
       }
-      return;
-    }
-
-    // Pause any currently playing track first
-    if (playingTrack && audioRefs.current[playingTrack]) {
-      audioRefs.current[playingTrack]?.pause();
-    }
-
-    // Lazy load audio if not already loaded
-    if (!loadedTracks.has(trackId)) {
-      // Pause current track before loading new one
+    } else {
+      // Pause any currently playing track
       if (playingTrack && audioRefs.current[playingTrack]) {
         audioRefs.current[playingTrack]?.pause();
       }
-      
-      setLoadedTracks(prev => new Set([...prev, trackId]));
-      setPlayingTrack(trackId); // Set as playing immediately
-      
-      // Small delay to ensure audio element is created
-      setTimeout(() => {
-        const audio = audioRefs.current[trackId];
-        if (audio) {
-          // Double-check no other track started playing in the meantime
-          if (playingTrack && playingTrack !== trackId && audioRefs.current[playingTrack]) {
-            audioRefs.current[playingTrack]?.pause();
-          }
-          audio.play().catch(err => {
-            console.error('Error playing audio:', err);
-            setPlayingTrack(null);
-          });
-        }
-      }, 100);
-      return;
-    }
 
-    // Track is already loaded, just play it
-    const audio = audioRefs.current[trackId];
-    if (audio) {
-      audio.play().catch(err => {
-        console.error('Error playing audio:', err);
-        setPlayingTrack(null);
-      });
-      setPlayingTrack(trackId);
+      // Play new track
+      const audio = audioRefs.current[trackId];
+      if (audio) {
+        audio.play().catch(err => {
+          console.error('Error playing audio:', err);
+          setPlayingTrack(null);
+        });
+        setPlayingTrack(trackId);
+      }
     }
   };
 
@@ -161,110 +115,110 @@ export default function MusicPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] bg-dark-bg">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-black text-white pt-36 pb-20 px-4">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 flex justify-center">
-          <img 
-            src="/assets/page-assets/banners/music-game-soundtracks-banner.png" 
-            alt="Game Soundtracks - Original music from BizarreBeasts games. Stream on your favorite platform or collect as NFTs."
-            className="w-full max-w-4xl object-contain rounded-2xl"
-          />
-        </div>
-        
-        {/* Description */}
-        <p className="text-lg text-gray-300 mb-8 max-w-4xl mx-auto px-4 text-center">
-          Original music from BizarreBeasts games! Stream BIZARRE, original soundtracks from BizarreBeasts games on your favorite platform, or collect them as exclusive NFTs. Experience the full BIZARRE audio universe that brings the games to life.
-        </p>
-
-        {/* About the Music Section */}
-        <div className="mb-8 bg-gray-800/50 rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
-            <Headphones className="w-5 h-5 text-gem-crystal" />
-            About the Music
-          </h2>
-          <p className="text-gray-400 mb-4">
-            All tracks are original compositions created and produced by{' '}
-            <a 
-              href="https://farcaster.xyz/kateyarter" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gem-crystal hover:text-gem-gold transition-colors"
-            >
-              @kateyarter
-            </a>
-            {' '}of Honey High Records for the BizarreBeasts gaming ecosystem. 
-            Each piece is crafted to enhance the gaming experience and bring the world of BizarreBeasts to life. 
-            Reach out to{' '}
-            <a 
-              href="https://farcaster.xyz/kateyarter" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gem-crystal hover:text-gem-gold transition-colors"
-            >
-              @kateyarter
-            </a>
-            {' '}for original tracks for your games or projects!
-          </p>
-          <p className="text-gray-400">
-            Stream on your favorite platform or collect limited edition NFT versions to support the project 
-            and own a piece of BizarreBeasts history.
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4">MUSIC</h1>
+          <p className="text-lg text-light-muted max-w-3xl">
+            Original compositions and productions spanning electronic, ambient, and soundtrack work.
+            Music for games, films, and artistic projects.
           </p>
         </div>
 
-        {/* Track Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tracks.map((track) => (
-            <div
-              key={track.id}
-              className="bg-dark-card border border-gem-crystal/20 rounded-lg overflow-hidden hover:border-gem-crystal/40 transition-all duration-300"
+        {/* Streaming Platforms */}
+        <div className="mb-12 p-6 bg-dark-card border border-dark-border">
+          <h2 className="text-xl font-semibold mb-4">Stream My Music</h2>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href="https://spotify.com/artist/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-all duration-300"
             >
-              {/* Cover Art - Clean without overlay */}
-              <div className="relative aspect-square bg-gray-800 group">
-                {track.coverArt ? (
-                  <img 
-                    src={track.coverArt}
-                    alt={track.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-gem-purple to-gem-blue flex items-center justify-center">
-                    <Music className="w-16 h-16 text-white/30" />
-                  </div>
-                )}
-                
-                {/* Playing indicator - minimal overlay */}
-                {playingTrack === track.id && (
-                  <div className="absolute top-2 right-2 bg-gradient-to-r from-gem-gold to-gem-crystal text-dark-bg text-xs px-2 py-1 rounded-full flex items-center gap-1 shadow-lg font-semibold">
-                    <div className="w-2 h-2 bg-dark-bg rounded-full animate-pulse" />
-                    Now Playing
-                  </div>
-                )}
+              <SpotifyIcon />
+              Spotify
+            </a>
+            <a
+              href="https://music.apple.com/artist/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              <Apple className="w-5 h-5" />
+              Apple Music
+            </a>
+            <a
+              href="https://music.youtube.com/channel/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              <YouTubeMusicIcon />
+              YouTube Music
+            </a>
+            <a
+              href="https://soundcloud.com/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 border border-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              <Music className="w-5 h-5" />
+              SoundCloud
+            </a>
+          </div>
+        </div>
 
-                {/* Audio Element - Only load when user clicks play */}
-                {track.audioUrl && loadedTracks.has(track.id) && (
-                  <audio
-                    ref={(el) => { audioRefs.current[track.id] = el; }}
-                    src={track.audioUrl}
-                    onEnded={() => handleAudioEnd(track.id)}
-                    preload="none"
-                  />
-                )}
-              </div>
+        {/* Filter Tags */}
+        <div className="mb-8 flex flex-wrap gap-3">
+          {filters.map(filter => (
+            <button
+              key={filter}
+              onClick={() => setSelectedFilter(filter)}
+              className={`px-4 py-2 border transition-all duration-300 ${
+                selectedFilter === filter
+                  ? 'bg-white text-black border-white'
+                  : 'border-white text-white hover:bg-white hover:text-black'
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
 
-              {/* Track Info */}
-              <div className="p-4">
-                {/* Play/Pause Button - External */}
-                {track.audioUrl && (
+        {/* Featured Track */}
+        {filteredTracks.find(t => t.featured) && (
+          <div className="mb-12">
+            <h2 className="text-2xl font-semibold mb-6">Featured Track</h2>
+            <div className="bg-dark-card border border-dark-border p-6">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="aspect-square bg-gradient-subtle flex items-center justify-center">
+                  <div className="text-center text-muted">
+                    <Album className="w-24 h-24 mx-auto mb-4 opacity-20" />
+                    <p>Album Artwork</p>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-3xl font-bold mb-2">
+                      {filteredTracks.find(t => t.featured)?.title}
+                    </h3>
+                    <p className="text-light-muted mb-4">
+                      {filteredTracks.find(t => t.featured)?.description}
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-muted mb-6">
+                      <span>{filteredTracks.find(t => t.featured)?.album}</span>
+                      <span>•</span>
+                      <span>{filteredTracks.find(t => t.featured)?.year}</span>
+                      <span>•</span>
+                      <span>{filteredTracks.find(t => t.featured)?.duration}</span>
+                    </div>
+                  </div>
                   <button
-                    onClick={() => handlePlayPause(track.id)}
-                    className={`w-full mb-3 py-2.5 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-105 ${
-                      playingTrack === track.id 
-                        ? 'bg-gradient-to-r from-gem-gold to-gem-pink text-dark-bg' 
-                        : 'bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink text-dark-bg'
-                    }`}
+                    onClick={() => handlePlayPause(filteredTracks.find(t => t.featured)!.id)}
+                    className="w-full px-6 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition-all duration-300 font-medium flex items-center justify-center gap-2"
                   >
-                    {playingTrack === track.id ? (
+                    {playingTrack === filteredTracks.find(t => t.featured)?.id ? (
                       <>
                         <Pause className="w-5 h-5" />
                         Pause
@@ -276,75 +230,116 @@ export default function MusicPage() {
                       </>
                     )}
                   </button>
-                )}
-                
-                <h3 className="text-lg font-semibold text-white mb-1">{track.title}</h3>
-                <p className="text-sm text-gray-400 mb-2">
-                  {track.game} • {track.duration}
-                </p>
-                <p className="text-xs text-gray-500 mb-3 line-clamp-2">
-                  {track.description}
-                </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
+        {/* Track Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTracks.filter(t => !t.featured).map((track) => (
+            <div
+              key={track.id}
+              className="bg-dark-card border border-dark-border hover:border-light-border transition-all duration-300"
+            >
+              {/* Album Art */}
+              <div className="aspect-square bg-gradient-subtle relative group">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-muted">
+                    <Headphones className="w-16 h-16 mx-auto mb-2 opacity-20" />
+                    <p className="text-sm">{track.title}</p>
+                  </div>
+                </div>
 
-                {/* Streaming Links - Hidden for now since no links available */}
-                {(track.links.spotify || track.links.apple || track.links.amazon || track.links.mint) && (
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap gap-2">
-                      {track.links.spotify && (
-                        <a
-                          href={track.links.spotify}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-3 py-1.5 bg-green-600/20 hover:bg-green-600/30 text-green-400 rounded text-sm transition-colors"
-                        >
-                          <SpotifyIcon />
-                          Spotify
-                        </a>
-                      )}
-                      {track.links.apple && (
-                        <a
-                          href={track.links.apple}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-3 py-1.5 bg-gray-600/20 hover:bg-gray-600/30 text-gray-300 rounded text-sm transition-colors"
-                        >
-                          <Apple className="w-4 h-4" />
-                          Apple
-                        </a>
-                      )}
-                      {track.links.amazon && (
-                        <a
-                          href={track.links.amazon}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 px-3 py-1.5 bg-orange-600/20 hover:bg-orange-600/30 text-orange-400 rounded text-sm transition-colors"
-                        >
-                          <AmazonMusicIcon />
-                          Amazon
-                        </a>
-                      )}
-                    </div>
-                    
-                    {/* Mint/Collect Button */}
-                    {track.links.mint && (
-                      <a
-                        href={track.links.mint}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-gem-gold to-gem-crystal text-black rounded font-semibold text-sm hover:opacity-90 transition-opacity"
-                      >
-                        <ShoppingBag className="w-4 h-4" />
-                        Collect as NFT
-                      </a>
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <button
+                    onClick={() => handlePlayPause(track.id)}
+                    className="p-4 bg-white bg-opacity-20 backdrop-blur-sm rounded-full hover:bg-opacity-30 transition-all"
+                  >
+                    {playingTrack === track.id ? (
+                      <Pause className="w-8 h-8 text-white" />
+                    ) : (
+                      <Play className="w-8 h-8 text-white" fill="white" />
                     )}
+                  </button>
+                </div>
+
+                {/* Playing indicator */}
+                {playingTrack === track.id && (
+                  <div className="absolute top-2 right-2 bg-white text-black text-xs px-2 py-1 font-medium">
+                    NOW PLAYING
                   </div>
                 )}
+
+                {/* Audio Element (hidden) */}
+                {track.audioUrl && (
+                  <audio
+                    ref={(el) => { audioRefs.current[track.id] = el; }}
+                    src={track.audioUrl}
+                    onEnded={() => handleAudioEnd(track.id)}
+                    preload="none"
+                  />
+                )}
+              </div>
+
+              {/* Track Info */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-1">{track.title}</h3>
+                {track.album && (
+                  <p className="text-sm text-muted mb-2">{track.album}</p>
+                )}
+                <p className="text-xs text-light-muted mb-3 line-clamp-2">
+                  {track.description}
+                </p>
+                <div className="flex items-center justify-between text-xs text-muted">
+                  <span>{track.duration}</span>
+                  <span>{track.year}</span>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1 mt-3">
+                  {track.tags.map(tag => (
+                    <span key={tag} className="text-xs px-2 py-1 bg-dark-hover text-light-muted">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
 
+        {/* Licensing Section */}
+        <div className="mt-20 bg-dark-panel border border-dark-border p-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Music Licensing</h2>
+          <p className="text-light-muted mb-8 max-w-2xl mx-auto">
+            My music is available for commercial licensing in games, films, advertisements,
+            and other media projects. Custom compositions and exclusive licenses available.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contact"
+              className="px-8 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition-all duration-300 font-medium"
+            >
+              Inquire About Licensing
+            </a>
+            <a
+              href="/press-kit"
+              className="px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-300 font-medium"
+            >
+              Download Music Samples
+            </a>
+          </div>
+        </div>
+
+        {/* About the Music */}
+        <div className="mt-12 text-center">
+          <p className="text-sm text-muted">
+            All music composed and produced by Kate Yarter • © {new Date().getFullYear()} Honey High Records
+          </p>
+        </div>
       </div>
     </div>
   );
