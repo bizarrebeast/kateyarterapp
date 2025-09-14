@@ -6,32 +6,93 @@
   :root {
     --background: #000000;
     --foreground: #ffffff;
+    --accent: #ffffff;
+    --muted: #1a1a1a;
+    --border: #2a2a2a;
   }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar for webkit browsers */
+/* Custom scrollbar for minimalist design */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(68, 208, 167, 0.1);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(68, 208, 167, 0.5);
+  background: var(--border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(68, 208, 167, 0.7);
+  background: var(--muted);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Forms */
+input, textarea, select {
+  font-family: inherit;
+  font-size: 16px;
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--foreground);
 }
 
 /* Prevent zoom on input focus for mobile */
@@ -48,67 +109,28 @@ body {
   }
 }
 
-/* Animation for Safari prompt */
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.animate-slide-up {
-  animation: slide-up 0.3s ease-out;
+.section {
+  padding: 4rem 0;
 }
 
-/* Enhanced scrollbar for sticker gallery on mobile */
-.sticker-scroll-container {
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: #fbbf24 #1f2937;
-}
-
-/* Webkit browsers (Chrome, Safari) - make scrollbar more visible */
-.sticker-scroll-container::-webkit-scrollbar {
-  height: 8px;
-  display: block !important;
-}
-
-.sticker-scroll-container::-webkit-scrollbar-track {
-  background: #1f2937;
-  border-radius: 4px;
-}
-
-.sticker-scroll-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #fbbf24, #f59e0b);
-  border-radius: 4px;
-  border: 1px solid #1f2937;
-}
-
-.sticker-scroll-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(90deg, #f59e0b, #d97706);
-}
-
-/* Mobile-specific: Always show scrollbar on mobile */
-@media (max-width: 640px) {
-  .sticker-scroll-container::-webkit-scrollbar {
-    height: 10px;
-  }
-  
-  .sticker-scroll-container::-webkit-scrollbar-thumb {
-    background: #fbbf24;
-    box-shadow: 0 0 6px rgba(251, 191, 36, 0.5);
+@media (min-width: 768px) {
+  .section {
+    padding: 6rem 0;
   }
 }
 
-/* Smooth animation for success messages */
-@keyframes fade-in {
+/* Animations */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -116,19 +138,93 @@ body {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* Animated gradient border */
-@keyframes gradient-shift {
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Loading states */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 25%,
+    var(--border) 50%,
+    var(--muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
   0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    background-position: 200% 0;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: -200% 0;
   }
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Grid layouts */
+.grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Aspect ratios */
+.aspect-square {
+  aspect-ratio: 1;
+}
+
+.aspect-video {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* Text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }

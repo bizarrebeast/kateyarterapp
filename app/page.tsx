@@ -1,390 +1,235 @@
 'use client';
 
 import Link from 'next/link';
-import { Palette, Gamepad2, Trophy, TrendingUp, Users, Sparkles, ArrowDownUp, Music, ExternalLink } from 'lucide-react';
+import { Music, Palette, Mail, Video, Instagram, Twitter, ExternalLink, ChevronDown, Headphones, Brush } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [marketCap, setMarketCap] = useState<string>('--');
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const fetchMarketCap = async () => {
-      try {
-        // Using DexScreener API to get BB token price data
-        const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/0x0520bf1d3cEE163407aDA79109333aB1599b4004');
-        const data = await response.json();
-        
-        if (data.pairs && data.pairs.length > 0) {
-          // Get the first pair's market cap
-          const mcap = data.pairs[0].fdv || data.pairs[0].marketCap;
-          if (mcap) {
-            // Format market cap without decimals
-            if (mcap >= 1000000) {
-              setMarketCap(`$${Math.round(mcap / 1000000)}M`);
-            } else if (mcap >= 1000) {
-              setMarketCap(`$${Math.round(mcap / 1000)}K`);
-            } else {
-              setMarketCap(`$${Math.round(mcap)}`);
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching market cap:', error);
-        setMarketCap('--');
-      }
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
     };
-
-    fetchMarketCap();
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchMarketCap, 30000);
-    
-    return () => clearInterval(interval);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   return (
-    <div className="min-h-[calc(100vh-64px)]">
+    <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
-      <section className="relative px-4 py-20 text-center">
-        <div className="max-w-4xl mx-auto">
-          {/* Banner */}
-          <div className="flex justify-center mb-6">
-            <img 
-              src="/assets/page-assets/banners/home-page-banner.png" 
-              alt="BizarreBeasts Banner" 
-              className="w-full max-w-4xl object-contain rounded-2xl"
-            />
-          </div>
-          
-          {/* Welcome Title */}
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">
-            BizarreBeasts ($BB) Miniapp
+      <section className="relative h-screen flex items-center justify-center pt-16">
+        <div className="absolute inset-0 bg-gradient-subtle opacity-50"></div>
+
+        <div className="relative z-10 text-center px-4 animate-fade-in">
+          <h1 className="text-6xl md:text-8xl font-bold mb-4 tracking-tight">
+            KATE YARTER
           </h1>
-          
-          <p className="text-xl text-gray-300 mb-8">
-            Create memes, play games, swap $BB tokens, collect art, win contests, and join the most BIZARRE community in web3!
+          <p className="text-xl md:text-2xl text-light-muted mb-8 font-light">
+            Music Producer • Visual Artist • CEO Honey High Records
           </p>
-          
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-12">
-            <Link href="/swap" className="bg-gradient-to-br from-dark-card via-dark-card to-gem-crystal/5 border border-gem-crystal/20 rounded-lg p-4 transition-all duration-300 hover:border-gem-crystal/40 hover:scale-105 cursor-pointer">
-              <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">$BB</div>
-              <div className="text-xs sm:text-sm text-gray-400">Token</div>
-            </Link>
-            <div className="bg-gradient-to-br from-dark-card via-dark-card to-gem-gold/5 border border-gem-gold/20 rounded-lg p-4 transition-all duration-300">
-              <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">{marketCap}</div>
-              <div className="text-xs sm:text-sm text-gray-400">Market Cap</div>
-            </div>
-            <div className="bg-gradient-to-br from-dark-card via-dark-card to-gem-pink/5 border border-gem-pink/20 rounded-lg p-4 transition-all duration-300">
-              <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">4400+</div>
-              <div className="text-xs sm:text-sm text-gray-400">Holders</div>
-            </div>
-            <div className="bg-gradient-to-br from-dark-card via-dark-card to-gem-crystal/5 border border-gem-crystal/20 rounded-lg p-4 transition-all duration-300">
-              <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">8</div>
-              <div className="text-xs sm:text-sm text-gray-400">Games</div>
-            </div>
-          </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
-              href="/meme-generator"
-              className="bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink text-black px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+              href="/music"
+              className="px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-300 font-medium"
             >
-              <Palette className="w-5 h-5" />
-              Stickers & Meme Creator
+              LISTEN TO MUSIC
             </Link>
             <Link
-              href="/games"
-              className="bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink text-black px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+              href="/artwork"
+              className="px-8 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition-all duration-300 font-medium"
             >
-              <Gamepad2 className="w-5 h-5" />
-              Play Games
+              VIEW ARTWORK
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* About BizarreBeasts Section */}
-      <section className="px-4 pb-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-dark-card via-dark-card to-gem-crystal/5 border border-gem-crystal/20 rounded-2xl p-8">
-            <div className="flex justify-center mb-4">
-              <img 
-                src="/assets/page-assets/logos/bb-token.png" 
-                alt="BizarreBeasts" 
-                className="w-[100px] h-[100px] object-contain"
-              />
-            </div>
-            <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">
-              About BizarreBeasts
-            </h2>
-            <div className="space-y-4 text-gray-300 text-lg">
-              <p>
-                BizarreBeasts is an original, art-powered ecosystem featuring hand-illustrated characters, animations, NFTs, and web3 games! With 8 games played over 130,000 times and achieving #1 trending on Remix and TheBaseApp, BizarreBeasts has built a notorious community of 4,400+ token holders GOING BIZARRE.
-              </p>
-              <p>
-                The $BB token (powered by $GLANKER) fuels our creative universe: rewarding the community, unlocking exclusive perks, and providing access to the /bizarrebeasts Farcaster community. As a holder, climb the Empire leaderboard, earn treasury rewards, and unlock premium features!
-              </p>
-              <p>
-                From original music and comics to interactive games and physical paintings, dive into the BIZARREBEASTS universe, where art and web3 collide!
-              </p>
-            </div>
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-pulse">
+            <ChevronDown className="w-6 h-6 text-light-muted" />
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="px-4 py-16">
+      {/* Featured Work Section */}
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl font-bold text-center mb-12 relative">
-            <span className="bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">
-              Features
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-gem-crystal/20 via-gem-gold/20 to-gem-pink/20 blur-3xl -z-10"></div>
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Stickers & Meme Creator */}
-            <Link href="/meme-generator" className="group">
-              <div 
-                className="relative rounded-lg overflow-hidden h-full flex items-end transition-all duration-300 cursor-pointer hover:scale-105"
-                style={{
-                  backgroundImage: 'url(/assets/page-assets/banners/feature-boxes/sticker-meme-feature-box.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  minHeight: '200px'
-                }}
-              >
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/30"></div>
-                
-                {/* Content */}
-                <div className="relative z-10 p-6">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent drop-shadow-lg">Stickers & Meme Creator</h3>
-                  <p className="text-white font-medium drop-shadow-md">
-                    Create and export memes with stickers, text overlays, and custom backgrounds
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">FEATURED WORK</h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Music Feature */}
+            <Link href="/music" className="group cursor-pointer">
+              <div className="relative overflow-hidden bg-dark-card border border-dark-border hover:border-light-border transition-all duration-300">
+                <div className="aspect-square bg-gradient-subtle"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Headphones className="w-24 h-24 text-white opacity-20 group-hover:opacity-30 transition-opacity" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-semibold mb-2">Latest Music</h3>
+                  <p className="text-light-muted">
+                    Original compositions and productions for games, films, and artistic projects
                   </p>
                 </div>
               </div>
             </Link>
 
-            {/* BizarreBeasts Games */}
-            <Link href="/games" className="group">
-              <div 
-                className="relative rounded-lg overflow-hidden h-full flex items-end transition-all duration-300 cursor-pointer hover:scale-105"
-                style={{
-                  backgroundImage: 'url(/assets/page-assets/banners/feature-boxes/games-feature-box.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  minHeight: '200px'
-                }}
-              >
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/30"></div>
-                
-                {/* Content */}
-                <div className="relative z-10 p-6">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent drop-shadow-lg">BizarreBeasts Games</h3>
-                  <p className="text-white font-medium drop-shadow-md">
-                    Play our collection of games with over 128K+ total plays and counting
+            {/* Artwork Feature */}
+            <Link href="/artwork" className="group cursor-pointer">
+              <div className="relative overflow-hidden bg-dark-card border border-dark-border hover:border-light-border transition-all duration-300">
+                <div className="aspect-square bg-gradient-subtle"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Brush className="w-24 h-24 text-white opacity-20 group-hover:opacity-30 transition-opacity" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-semibold mb-2">Visual Art</h3>
+                  <p className="text-light-muted">
+                    Canvas paintings, watercolors, and mixed media explorations
                   </p>
                 </div>
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
 
-            {/* Token Swap */}
-            <Link href="/swap" className="group">
-              <div 
-                className="relative rounded-lg overflow-hidden h-full flex items-end transition-all duration-300 cursor-pointer hover:scale-105"
-                style={{
-                  backgroundImage: 'url(/assets/page-assets/banners/feature-boxes/swap-feature-box.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  minHeight: '200px'
-                }}
-              >
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/30"></div>
-                
-                {/* Content */}
-                <div className="relative z-10 p-6">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent drop-shadow-lg">Token Swap</h3>
-                  <p className="text-white font-medium drop-shadow-md">
-                    Swap $BB tokens with integrated Uniswap interface on Base
-                  </p>
-                </div>
-              </div>
-            </Link>
+      {/* About Section */}
+      <section className="py-20 px-4 bg-dark-panel">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8">ABOUT</h2>
+          <p className="text-lg text-light-muted leading-relaxed mb-8">
+            Kate Yarter is an independent artist and music producer based in California.
+            As the founder and CEO of Honey High Records, she creates original music for games,
+            films, and artistic projects while pursuing her passion for visual arts through
+            canvas paintings and watercolor works.
+          </p>
+          <p className="text-lg text-light-muted leading-relaxed mb-8">
+            Her work spans multiple mediums, from ethereal soundscapes and electronic compositions
+            to vibrant visual narratives that explore themes of nature, technology, and human emotion.
+          </p>
+          <Link
+            href="/about"
+            className="inline-block px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-300 font-medium"
+          >
+            LEARN MORE
+          </Link>
+        </div>
+      </section>
 
-            {/* Empire Leaderboard */}
-            <Link href="/empire" className="group">
-              <div 
-                className="relative rounded-lg overflow-hidden h-full flex items-end transition-all duration-300 cursor-pointer hover:scale-105"
-                style={{
-                  backgroundImage: 'url(/assets/page-assets/banners/feature-boxes/empire-feature-box.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  minHeight: '200px'
-                }}
-              >
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/30"></div>
-                
-                {/* Content */}
-                <div className="relative z-10 p-6">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent drop-shadow-lg">Empire Leaderboard</h3>
-                  <p className="text-white font-medium drop-shadow-md">
-                    Live leaderboard tracking with tiers, boosters, and multipliers
-                  </p>
-                </div>
-              </div>
-            </Link>
+      {/* Services Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">SERVICES</h2>
 
-            {/* Game Soundtracks */}
-            <Link href="/music" className="group">
-              <div 
-                className="relative rounded-lg overflow-hidden h-full flex items-end transition-all duration-300 cursor-pointer hover:scale-105"
-                style={{
-                  backgroundImage: 'url(/assets/page-assets/banners/feature-boxes/music-feature-box.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  minHeight: '200px'
-                }}
-              >
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/30"></div>
-                
-                {/* Content */}
-                <div className="relative z-10 p-6">
-                  <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent drop-shadow-lg">Game Soundtracks</h3>
-                  <p className="text-white font-medium drop-shadow-md">
-                    Original music by @kateyarter for BizarreBeasts games
-                  </p>
-                </div>
-              </div>
-            </Link>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <Music className="w-12 h-12 mx-auto mb-4 text-white" />
+              <h3 className="text-xl font-semibold mb-2">Music Production</h3>
+              <p className="text-light-muted">
+                Original compositions for games, films, and commercial projects
+              </p>
+            </div>
 
-            {/* Community Hub */}
-            <div 
-              className="relative rounded-lg overflow-hidden h-full flex items-end opacity-60"
-              style={{
-                backgroundImage: 'url(/assets/page-assets/banners/feature-boxes/community-feature-box.png)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                minHeight: '200px'
-              }}
+            <div className="text-center">
+              <Palette className="w-12 h-12 mx-auto mb-4 text-white" />
+              <h3 className="text-xl font-semibold mb-2">Art Commissions</h3>
+              <p className="text-light-muted">
+                Custom paintings and illustrations for personal or commercial use
+              </p>
+            </div>
+
+            <div className="text-center">
+              <Video className="w-12 h-12 mx-auto mb-4 text-white" />
+              <h3 className="text-xl font-semibold mb-2">Live Performance</h3>
+              <p className="text-light-muted">
+                Available for live music performances and artistic collaborations
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/contact"
+              className="inline-block px-8 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition-all duration-300 font-medium"
             >
-              {/* Dark overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-              
-              {/* Content */}
-              <div className="relative z-10 p-6">
-                <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent drop-shadow-lg">Community Hub</h3>
-                <p className="text-white font-medium drop-shadow-md">
-                  Contests, rewards, and social features coming soon
-                </p>
-              </div>
-            </div>
+              GET IN TOUCH
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Featured Game Banner - Treasure Quest */}
-      <section className="px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-gradient-to-br from-dark-card via-dark-card to-gem-gold/10 border border-gem-gold/30 rounded-2xl overflow-hidden hover:border-gem-gold/50 transition-all duration-300">
-            <div className="relative">
-              <img 
-                src="/assets/page-assets/banners/treasure-quest-banner.png" 
-                alt="BizarreBeasts Treasure Quest"
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute top-4 right-4 bg-gem-gold/90 text-dark-bg px-3 py-1 rounded-full text-sm font-bold">
-                FEATURED GAME
-              </div>
-            </div>
-            
-            <div className="p-6">
-              <div className="flex flex-col gap-6">
-                {/* Game Title and Description */}
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-bold mb-3 bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">
-                    BizarreBeasts: Treasure Quest
-                  </h2>
-                  
-                  <p className="text-gray-300 mb-3 text-base sm:text-lg">
-                    Climb endless crystal caverns as BizBe in this retro arcade platformer! Jump on enemies, collect gems, and discover treasure chests through 5 chapters and 50+ levels. Journey through Crystal Caverns, Volcanic, Steampunk, Electrified, and Galactic Crystal Caverns, then face endless BEAST MODE with progressive difficulty!
-                  </p>
-                  
-                  <div className="bg-dark-bg/50 rounded-lg p-4 mb-4">
-                    <p className="text-gray-400 italic text-sm sm:text-base">
-                      "I poured over 300 hours into building the entire game, including all of the art, animations, and game logic, to make it as fun, BIZARRE, and creative as possible. The game includes an original character, BizBe, 9 enemies, 5 chapters with 10 levels each, bonus levels, over 70 original backgrounds, and Level 51+ becomes BEAST MODE!"
-                    </p>
-                    <p className="text-gem-gold text-sm mt-2">— BizarreBeast</p>
-                  </div>
-                </div>
+      {/* Connect Section */}
+      <section className="py-20 px-4 bg-dark-panel">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-8">CONNECT</h2>
 
-                {/* Two Column Layout for Features and Guide */}
-                <div className="grid sm:grid-cols-2 gap-6">
-                  {/* Game Features */}
-                  <div>
-                    <h3 className="text-lg font-bold mb-3 text-gem-crystal">Game Features</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-dark-bg/30 rounded-lg p-3 text-center">
-                        <div className="text-xl font-bold text-gem-crystal">50+</div>
-                        <div className="text-xs text-gray-400">Levels</div>
-                      </div>
-                      <div className="bg-dark-bg/30 rounded-lg p-3 text-center">
-                        <div className="text-xl font-bold text-gem-gold">5</div>
-                        <div className="text-xs text-gray-400">Chapters</div>
-                      </div>
-                      <div className="bg-dark-bg/30 rounded-lg p-3 text-center">
-                        <div className="text-xl font-bold text-gem-pink">9</div>
-                        <div className="text-xs text-gray-400">Enemies</div>
-                      </div>
-                      <div className="bg-dark-bg/30 rounded-lg p-3 text-center">
-                        <div className="text-xl font-bold bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink bg-clip-text text-transparent">∞</div>
-                        <div className="text-xs text-gray-400">Beast Mode</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Player's Guide */}
-                  <div>
-                    <h3 className="text-lg font-bold mb-3 text-gem-gold">Player's Guide</h3>
-                    <p className="text-gray-400 text-sm mb-4">
-                      Your ultimate companion to navigating the BIZARRE and treasure-filled crystal caverns. Learn everything you need to become a BIZARRE treasure quester!
-                    </p>
-                    <a
-                      href="https://paragraph.com/@bizarrebeasts/the-official-players-guide-bizarrebeasts-treasure-quest"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink text-dark-bg px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 text-sm"
-                    >
-                      Read Player's Guide
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="flex justify-center gap-6 mb-8">
+            <a
+              href="https://instagram.com/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 border border-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              <Instagram className="w-6 h-6" />
+            </a>
+            <a
+              href="https://twitter.com/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 border border-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              <Twitter className="w-6 h-6" />
+            </a>
+            <a
+              href="https://farcaster.xyz/kateyarter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 border border-white hover:bg-white hover:text-black transition-all duration-300"
+            >
+              <ExternalLink className="w-6 h-6" />
+            </a>
           </div>
-        </div>
-      </section>
 
-      {/* Contest Banner */}
-      <section className="px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-gem-crystal/20 via-gem-gold/20 to-gem-pink/20 rounded-lg p-8 text-center border border-gem-crystal/30">
-            <h2 className="text-2xl font-bold mb-4">🏆 Meme Contest Coming Soon</h2>
-            <p className="text-gray-300 mb-6">
-              Get ready to showcase your creativity and win amazing prizes!
+          <div className="mb-8">
+            <p className="text-light-muted mb-4">
+              Join the newsletter for updates on new releases and events
             </p>
-            <Link
-              href="/meme-generator"
-              className="inline-block bg-gradient-to-r from-gem-crystal via-gem-gold to-gem-pink text-black px-6 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-            >
-              Start Creating
-            </Link>
+            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 bg-black border border-white focus:border-white text-white placeholder-muted"
+              />
+              <button
+                type="submit"
+                className="px-8 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition-all duration-300 font-medium"
+              >
+                SUBSCRIBE
+              </button>
+            </form>
+          </div>
+
+          <div className="text-light-muted">
+            <p className="mb-2">
+              <a
+                href="https://honeyhighrecords.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Honey High Records
+              </a>
+            </p>
+            <p className="mb-2">
+              <a
+                href="https://kateyarter.etsy.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Etsy Shop
+              </a>
+            </p>
           </div>
         </div>
       </section>

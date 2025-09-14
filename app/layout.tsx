@@ -12,16 +12,16 @@ import { SDKProvider } from "@/contexts/SDKContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://bbapp.bizarrebeasts.io'),
-  title: "BizarreBeasts ($BB)",
-  description: "The OFFICIAL BizarreBeasts app! Create BizarreBeasts memes, play games, swap BB tokens, collect art, win contests, and join the most BIZARRE community in web3!",
-  keywords: "BizarreBeasts, meme generator, Farcaster, Base, Web3",
+  metadataBase: new URL('https://kateyarter.com'),
+  title: "Kate Yarter - Music Producer & Visual Artist",
+  description: "Kate Yarter is an independent music producer and visual artist. CEO of Honey High Records. Original music, canvas paintings, watercolors, and creative collaborations.",
+  keywords: "Kate Yarter, music producer, visual artist, Honey High Records, canvas art, watercolor, music composition",
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'BizarreBeasts',
+    title: 'Kate Yarter',
   },
   icons: {
     icon: '/favicon.svg',
@@ -29,51 +29,51 @@ export const metadata: Metadata = {
     apple: '/favicon.svg',
   },
   openGraph: {
-    title: "BizarreBeasts",
-    description: "Create memes, play games, swap, collect art, and win contests in web3's most BIZARRE community!",
+    title: "Kate Yarter - Music Producer & Visual Artist",
+    description: "Independent music producer and visual artist. CEO of Honey High Records. Original music, canvas paintings, watercolors.",
     type: "website",
-    url: "https://bbapp.bizarrebeasts.io",
-    siteName: "BizarreBeasts",
+    url: "https://kateyarter.com",
+    siteName: "Kate Yarter",
     images: [
       {
-        url: "https://bbapp.bizarrebeasts.io/farcaster-assets/hero.png",
+        url: "https://kateyarter.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "BizarreBeasts",
+        alt: "Kate Yarter",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BizarreBeasts",
-    description: "Create memes, play games, swap, collect art, and win contests in web3's most BIZARRE community!",
-    images: ["https://bbapp.bizarrebeasts.io/farcaster-assets/hero.png"],
+    title: "Kate Yarter - Music Producer & Visual Artist",
+    description: "Independent music producer and visual artist. CEO of Honey High Records.",
+    images: ["https://kateyarter.com/og-image.jpg"],
   },
   other: {
     'fc:miniapp': JSON.stringify({
       version: "1",
-      imageUrl: "https://bbapp.bizarrebeasts.io/farcaster-assets/hero.png",
+      imageUrl: "https://kateyarter.com/og-image.jpg",
       button: {
-        title: "BizarreBeasts ($BB)",
+        title: "Kate Yarter",
         action: {
           type: "launch_miniapp",
-          name: "BizarreBeasts",
-          url: "https://bbapp.bizarrebeasts.io",
-          splashImageUrl: "https://bbapp.bizarrebeasts.io/farcaster-assets/splash.png",
+          name: "Kate Yarter",
+          url: "https://kateyarter.com",
+          splashImageUrl: "https://kateyarter.com/splash.jpg",
           splashBackgroundColor: "#000000"
         }
       }
     }),
     'fc:frame': JSON.stringify({
       version: "1",
-      imageUrl: "https://bbapp.bizarrebeasts.io/farcaster-assets/hero.png",
+      imageUrl: "https://kateyarter.com/og-image.jpg",
       button: {
-        title: "BizarreBeasts ($BB)",
+        title: "Kate Yarter",
         action: {
           type: "launch_miniapp",
-          name: "BizarreBeasts",
-          url: "https://bbapp.bizarrebeasts.io",
-          splashImageUrl: "https://bbapp.bizarrebeasts.io/farcaster-assets/splash.png",
+          name: "Kate Yarter",
+          url: "https://kateyarter.com",
+          splashImageUrl: "https://kateyarter.com/splash.jpg",
           splashBackgroundColor: "#000000"
         }
       }
@@ -88,7 +88,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-dark-bg text-white min-h-screen antialiased`}>
+      <body className={`${inter.className} bg-black text-white min-h-screen antialiased`}>
         <SDKProvider>
           <FarcasterSDK />
           <FarcasterProvider>

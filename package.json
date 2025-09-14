@@ -1,7 +1,9 @@
 {
-  "name": "bizarrebeastsminiapp-temp",
-  "version": "0.1.0",
+  "name": "kateyarter-portfolio",
+  "version": "1.0.0",
   "private": true,
+  "description": "Professional artist portfolio for Kate Yarter - Music Producer and Visual Artist",
+  "author": "Kate Yarter",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
