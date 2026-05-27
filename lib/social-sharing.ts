@@ -45,7 +45,7 @@ export const SHARE_TEMPLATES = {
     default: `Check out BizarreBeasts ($BB) and hold 25M tokens to join /bizarrebeasts! 🚀 👹\n\nCC @bizarrebeast`,
     meme: `Just created this epic meme with BizarreBeasts! 👹\n\nJoin the bizarre movement at /bizarrebeasts\nCC @bizarrebeast`,
     rank: `I'm rank #{rank} on the BizarreBeasts Empire Leaderboard! 🏆\n\nJoin /bizarrebeasts and climb the ranks!\nCC @bizarrebeast`,
-    ritual: `Daily BIZARRE Ritual #{id}: {title}\n\n{description}\n\nJoin me in completing daily $BIZARRE rituals in the BizarreBeasts ($BB) Community! 👹\n\n#BizarreBeasts #BBRituals`,
+    ritual: `Daily BIZARRE Ritual #{id}: {title}\n\n{description}\n\nJoin me in completing daily BIZARRE rituals in the BizarreBeasts ($BB) Community! 👹\n\n#BizarreBeasts #BBRituals`,
   },
   twitter: {
     default: `Check out @bizarrebeasts_ ( $BB ) - The weirdest, wildest meme generator in crypto! 👹🚀`,

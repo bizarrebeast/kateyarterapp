@@ -186,7 +186,7 @@ export default function RitualsPage() {
       })
       .join('\n');
     
-    const shareText = `I've completed ${completedCount} of 9 Daily BIZARRE Rituals! 👹\n\n${completedRitualsList}\n\nJoin me in the BizarreBeasts ($BB) Community and complete your daily $BIZARRE rituals!\n\n#BizarreBeasts #BBRituals`;
+    const shareText = `I've completed ${completedCount} of 9 Daily BIZARRE Rituals! 👹\n\n${completedRitualsList}\n\nJoin me in the BizarreBeasts ($BB) Community and complete your daily BIZARRE rituals!\n\n#BizarreBeasts #BBRituals`;
     
     // Build URL with embeds[] parameter for proper link preview
     const params = new URLSearchParams();
@@ -229,7 +229,7 @@ export default function RitualsPage() {
       : ritual.actionUrl;
     
     // Clean text without URLs (Farcaster will add them as embeds)
-    const shareText = `Daily BIZARRE Ritual #${ritual.id}: ${ritual.title}\n\n${ritual.description}\n\nJoin me in completing daily $BIZARRE rituals in the BizarreBeasts ($BB) Community! 👹\n\n#BizarreBeasts #BBRituals`;
+    const shareText = `Daily BIZARRE Ritual #${ritual.id}: ${ritual.title}\n\n${ritual.description}\n\nJoin me in completing daily BIZARRE rituals in the BizarreBeasts ($BB) Community! 👹\n\n#BizarreBeasts #BBRituals`;
     
     // Build URL with embeds[] parameters for proper link previews
     const baseUrl = 'https://warpcast.com/~/compose';
